@@ -1,0 +1,9 @@
+println("hola");
+('b = int(10));
+('a = ('b + int(2) * int(10)) - int(1));
+('bool = bool(false));
+println('bool);
+println(string("variable string"));
+println(int(100));
+// print("adios");
+print("adios");

@@ -1,0 +1,26 @@
+fmod TYPE is
+    pr INT .
+    pr STRING .
+    pr QID .
+
+    sorts Types Type .
+    subsort Qid < Type .
+
+    var I : Int .
+    var S : String .
+    var B : Bool .
+
+    ops intType stringType boolType : -> Types [ctor] .
+    op (__) : Types Int -> Type [ctor] .
+    op (__) : Types String -> Type [ctor] .
+    op (__) : Types Bool -> Type [ctor] .
+
+    op int : Int -> Type .
+    eq int(I) = (intType I) .
+
+    op string : String -> Type .
+    eq string(S) = (stringType S) .
+
+    op bool : Bool -> Type .
+    eq bool(B) = (boolType B) .
+endfm

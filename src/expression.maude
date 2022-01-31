@@ -1,0 +1,32 @@
+fmod EXPRESSION is
+    pr MEMORY .
+
+    sort Expression .
+    subsort Type < Expression .
+
+    op _+_ : Expression Expression -> Expression [ctor assoc comm] .
+    op _-_ : Expression Expression -> Expression [ctor] .
+    op _*_ : Expression Expression -> Expression [ctor assoc comm] .
+    
+    vars T T' : Type .
+    vars I I' : Int .
+    vars S S' : String .
+    var M : Memory .
+    var Q : Qid .
+    vars E E' : Expression .
+
+    op eval : Memory Expression -> Type .
+    eq eval (M, (intType I) + (intType I')) = (intType I + I') .
+    eq eval (M, (intType I) - (intType I')) = (intType I - I') .
+    eq eval (M, (intType I) * (intType I')) = (intType I * I') .
+
+    eq eval (M, (stringType S) + (stringType S')) = (stringType S + S') .
+
+    eq eval (M, Q) = find(M, Q) .
+    eq eval (M, T) = T .
+
+    eq eval (M, E + E') = eval(M, eval(M, E) + eval(M, E')) .
+    eq eval (M, E - E') = eval(M, eval(M, E) - eval(M, E')) .
+    eq eval (M, E * E') = eval(M, eval(M, E) * eval(M, E')) .
+
+endfm

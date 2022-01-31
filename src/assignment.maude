@@ -1,0 +1,13 @@
+fmod ASSIGNMENT is
+    pr EXPRESSION .
+    sort Assignment .
+
+    op _=_ : Qid Expression -> Assignment [ctor] .
+
+    var M : Memory .
+    var Q : Qid .
+    var T : Type .
+
+    op assign : Memory Assignment -> Memory .
+    eq assign(M, Q = T) = save(M, Q, T) .
+endfm

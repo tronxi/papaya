@@ -1,0 +1,36 @@
+mod IO is
+    pr TYPE .
+    pr MEMORY .
+    pr CONVERSION .
+    including STD-STREAM . 
+
+    var S : String .
+    var I : Int .
+    var O : Oid .
+    var M : Memory .
+    var Q : Qid .
+
+    op print : String Oid -> Msg .
+    eq print(S, O) = write(stdout, O, S) .
+
+    op println : String Oid -> Msg .
+    eq println(S, O) = print(S + "\n", O) .
+
+    op print : Memory Type Oid -> Msg .
+    eq print(M, (stringType S), O) = write(stdout, O, S) .
+    eq print(M, (intType I), O) = write(stdout, O, string(I, 10)) .
+    eq print(M, (boolType false), O) = print("false", O) .
+    eq print(M, (boolType true), O) = print("true", O) .
+    eq print(M, Q, O) = print(M, find(M, Q), O) [owise] .
+
+    op println : Memory Type Oid -> Msg .
+    eq println(M, (stringType S), O) =  print(S + "\n", O) .
+    eq println(M, (intType I), O) =  print(string(I, 10) + "\n", O) .
+    eq println(M, (boolType false), O) = println("false", O) .
+    eq println(M, (boolType true), O) = println("true", O) .
+    eq println(M, Q, O) = println(M, find(M, Q), O) [owise] .
+
+    op startWrite : String Oid -> Msg .
+    eq startWrite(S, O) = getLine (stdin, O, S) .
+
+endm

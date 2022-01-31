@@ -1,0 +1,18 @@
+load loads
+mod TEST is
+    pr SEMANTICS .
+    
+    op memory : -> Memory .
+    eq memory = ['a, (int 1)] ['b, (int 2)] ['c, (string "c")] ['d, (string "d")] .
+
+    op memoryTest : -> Memory .
+    eq memoryTest = ['b, (int 10)] ['c, (string "hl")] .    
+endm
+--- red save(memory, 'a, (string "10")) .
+--- red assign(memory, 'c = (string "hola")) .
+--- red eval (memory, find(memory, 'a) sum find(memory, 'b)) .
+--- red eval (find(memory, 'c) sum find(memory, 'd)) .
+
+rew {memoryTest | ('a = 'b sum (int 2));} .
+
+q

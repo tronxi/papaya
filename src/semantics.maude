@@ -1,0 +1,50 @@
+mod SEMANTICS is
+    pr SYNTAX .
+    pr IO .
+    including STD-STREAM . 
+
+    sort System .
+    subsort System < Attribute .
+
+    op {_|_} : Memory Program -> System [ctor] .
+
+    op System : -> Cid . 
+    op system : -> Oid . 
+
+    var M : Memory .
+    var Q : Qid .
+    var E : Expression .
+    var P P' : Program .
+    var S : String .
+    var T : Type .
+
+    rl [comment] :
+        {M | // P' P}
+        =>
+        {M | P} . 
+
+    rl [assignment] :
+        {M | (Q = E);  P}
+        =>
+        {save(M, Q, eval(M, E)) | P} .
+    
+    rl [printString] :
+        < system : System | {M | print(S); P} >
+        =>
+        < system : System | { M | P} > print(S, system) .
+
+    rl [printlnString] :
+        < system : System | {M | println(S); P} >
+        =>
+        < system : System | { M | P} > println(S, system) .
+    
+    rl [printType] :
+        < system : System | {M | print(T); P} >
+        =>
+        < system : System | { M | P} > print(M, T, system) .
+
+    rl [printlnType] :
+        < system : System | {M | println(T); P} >
+        =>
+        < system : System | { M | P} > println(M, T, system) .
+endm
