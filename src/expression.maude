@@ -9,6 +9,7 @@ fmod EXPRESSION is
     op _*_ : Expression Expression -> Expression [ctor assoc comm] .
     op size(_) : Type -> Expression [ctor] .
     op get(_,_) : Expression Int -> Expression [ctor] .
+    op remove(_,_) : Expression Int -> Expression [ctor] .
     
     vars T T' : Type .
     vars I I' : Int .
@@ -43,6 +44,14 @@ fmod EXPRESSION is
     eq eval (M, get(listType L, I)) = elementList(L, I, 0) .
     eq eval (M, get(Q, I)) = elementListAux(find(M, Q), I) .
     eq eval (M, get(E, I)) = eval(M, get(eval(M,E), I)) .
+
+    eq eval (M, remove(listType L, I)) = (listType removeElementList(L, I, 0)) .
+    eq eval (M, remove(Q, I)) = (listType removeElementAux(find(M, Q), I)) .
+    eq eval (M, remove(E, I)) = eval(M, remove(eval(M,E), I)) .
+
+    op removeElementAux : Type Int -> ListType .
+    eq removeElementAux((listType L), I) = removeElementList(L, I, 0) .
+    eq removeElementAux(T, I) = (intType 0) [owise] .
 
     op elementListAux : Type Int -> ListType .
     eq elementListAux((listType L), I) = elementList(L, I, 0) .

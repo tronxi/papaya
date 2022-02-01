@@ -1,8 +1,12 @@
 load loads
 mod TEST is
     pr SEMANTICS .  
+    
+    op list : -> ListType .
+    eq list = int(4), int(2) ,int(3) .
 endm
-red sizeList(int(4) int(2) int(3)) .
+--- red list .
+red removeElementList(list, 2, 0) .
 --- rew { none | ('a = list(int(3) int(2) int(4))); ('size = size('a)); } .
 
 q

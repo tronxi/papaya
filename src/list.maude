@@ -14,5 +14,10 @@ fmod LISTTYPE is
     op elementList : ListType Int Int -> ListType .
     eq elementList(empty, I , I') = empty .
     eq elementList(L, L', I , I) = L .
-    eq elementList(L, L', I, I') = elementList(L', I, s(I')) .
+    eq elementList(L, L', I, I') = elementList(L', I, s(I')) [owise] .
+
+    op removeElementList : ListType Int Int -> ListType .
+    eq removeElementList(empty, I , I') = empty .
+    eq removeElementList(L, L', I , I) = removeElementList(L', I, s(I)) .
+    eq removeElementList(L, L', I, I') = L, removeElementList(L', I, s(I')) [owise] .
 endfm

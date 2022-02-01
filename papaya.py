@@ -9,7 +9,7 @@ def main(filename, debug=False):
     maude.load("src/loads.maude")
     result = maude.getModule('SEMANTICS').parseTerm(generatedSystem).erewrite()
     if debug:
-        print("\n\nResult:")
+        print("\nResult:")
         print(result)
 
 if __name__ == "__main__":
