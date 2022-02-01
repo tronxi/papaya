@@ -6,7 +6,8 @@ mod TEST is
     eq list = int(4), int(2) ,int(3) .
 endm
 --- red list .
-red removeElementList(list, 2, 0) .
+red eval(['a, (intType 5)], int(6)) .
+--- red modifyElementList(list,string("nuevo"), 0, 0) .
 --- rew { none | ('a = list(int(3) int(2) int(4))); ('size = size('a)); } .
 
 q

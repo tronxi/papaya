@@ -11,6 +11,7 @@ fmod EXPRESSION is
     op get(_,_) : Expression Int -> Expression [ctor] .
     op remove(_,_) : Expression Int -> Expression [ctor] .
     op add(_,_) : Expression Type -> Expression [ctor] .
+    op modify(_,_,_) : Expression Int Expression -> Expression [ctor] .
     
     vars T T' : Type .
     vars I I' : Int .
@@ -42,6 +43,10 @@ fmod EXPRESSION is
     eq eval (M, size(listType L)) = (intType sizeList(L)) .
     eq eval (M, size(Q)) = (intType sizeAux(find(M, Q))) .
 
+    eq eval (M, modify((listType L), I, E)) = (listType modifyElementList(L, eval(M,E), I, 0)) .
+    eq eval (M, modify(Q, I, E)) = (listType modifyAux(M, find(M, Q), eval(M,E), I)) .
+    eq eval (M, modify(E, I, E')) = eval(M, modify(eval(M, E), I, eval(M,E'))) .
+
     eq eval (M, get(listType L, I)) = elementList(L, I, 0) .
     eq eval (M, get(Q, I)) = elementListAux(find(M, Q), I) .
     eq eval (M, get(E, I)) = eval(M, get(eval(M,E), I)) .
@@ -67,5 +72,10 @@ fmod EXPRESSION is
 
     op addAux : Type Type -> ListType .
     eq addAux((listType L), T) = L, T .
+    eq addAux(T, T') = (intType 0) [owise] .
+
+    op modifyAux : Memory Type Type Int -> ListType .
+    eq modifyAux(M, (listType L), T, I) = modifyElementList(L, T, I, 0) .
+    eq modifyAux(M, T, T', I) = (intType 0) [owise] .
 
 endfm

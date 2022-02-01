@@ -4,7 +4,7 @@ fmod LISTTYPE is
     op empty : -> ListType [ctor] .
     op _,_ : ListType ListType -> ListType [ctor assoc id: empty] .
 
-    vars L L' : ListType .
+    vars L L' L'' : ListType .
     vars I I' : Int .
 
     op sizeList : ListType -> Int .
@@ -20,4 +20,9 @@ fmod LISTTYPE is
     eq removeElementList(empty, I , I') = empty .
     eq removeElementList(L, L', I , I) = removeElementList(L', I, s(I)) .
     eq removeElementList(L, L', I, I') = L, removeElementList(L', I, s(I')) [owise] .
+
+    op modifyElementList : ListType ListType Int Int -> ListType .
+    eq modifyElementList(empty, L'', I, I') = empty .
+    eq modifyElementList((L, L' ), L'', I, I) =  L'', modifyElementList(( L'), L'', I, s(I)) .
+    eq modifyElementList((L, L'), L'', I, I') = L, modifyElementList((L'), L'', I, s(I')) [owise] .
 endfm

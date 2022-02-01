@@ -24,8 +24,8 @@ println("");
 
 
 println("add");
-('addlist = list(int(1), int(2), int(3), int(4)));
-('addlist = add('addlist, int(5)));
+('addlist = list(int(1), int(2), list(string("hola"), string("mundo")), int(4)));
+('addlist = modify('addlist, 2, modify(get('addlist, 2),1,string("inglaterra"))));
 println('addlist);
 println("");
 
