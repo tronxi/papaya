@@ -9,7 +9,7 @@ fmod LISTTYPE is
 
     op sizeList : ListType -> Int .
     eq sizeList(empty) = 0 .
-    eq sizeList(L, L') = s(sizeList(L')) .
+    eq sizeList(L, L') = s(sizeList(L')) [owise] .
 
     op elementList : ListType Int Int -> ListType .
     eq elementList(empty, I , I') = empty .

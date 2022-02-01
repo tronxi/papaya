@@ -11,7 +11,7 @@ mod IO is
     var Q : Qid .
     var F : Float .
     var E : Expression .
-    var L : ListType .
+    vars L L' : ListType .
 
     op print : String Oid -> Msg .
     eq print(S, O) = write(stdout, O, S) .
@@ -25,7 +25,7 @@ mod IO is
     eq print(M, (floatType F), O) = write(stdout, O, string(F)) .
     eq print(M, (boolType false), O) = print("false", O) .
     eq print(M, (boolType true), O) = print("true", O) .
-    eq print(M, (listType L), O) = print("list", O) .
+    eq print(M, (listType L), O) = printList(M, L, O) .
     eq print(M, E, O) = print(M, eval(M, E), O) [owise] .
 
     op println : Memory Expression Oid -> Msg .
@@ -34,8 +34,18 @@ mod IO is
     eq println(M, (floatType F), O) =  println(string(F), O) .
     eq println(M, (boolType false), O) = println("false", O) .
     eq println(M, (boolType true), O) = println("true", O) .
-    eq println(M, (listType L), O) = println("list", O) .
+    eq println(M, (listType L), O) = printlnList(M, L, O) .
     eq println(M, E, O) = println(M, eval(M, E), O) [owise] .
+
+
+    op printList : Memory ListType Oid -> Msg .
+    eq printList(M, empty, O) = print("", O) .
+    eq printList(M, L, L', O) = print(M, L, O) printList(M, L', O) .
+
+    op printlnList : Memory ListType Oid -> Msg .
+    eq printlnList(M, empty, O) = print("", O) .
+    eq printlnList(M, L, L', O) = println(M, L, O) printlnList(M, L', O) .
+
 
     op startWrite : String Oid -> Msg .
     eq startWrite(S, O) = getLine (stdin, O, S) .

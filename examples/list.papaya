@@ -16,10 +16,17 @@ println("");
 // println(get(list(int(56), list(int(1), int(2)), int(2), int(1)), 1));
 // println("");
 
-println("remove");
-('removelist = list(int(1), int(2), list(int(3), int(4))));
-('removelist = remove(get('removelist,2), 1));
-println(size('removelist));
+// println("remove");
+// ('removelist = list(int(1), int(2), list(int(3), int(4))));
+// ('removelist = remove(get('removelist,2), 1));
+// println(size('removelist));
+// println("");
+
+
+println("add");
+('addlist = list(int(1), int(2), int(3), int(4)));
+('addlist = add('addlist, int(5)));
+println('addlist);
 println("");
 
 print("adios");
