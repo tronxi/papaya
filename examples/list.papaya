@@ -1,0 +1,19 @@
+println("hola");
+println("");
+
+('list = list(int(56), list(int(1), int(2)), int(2), int(1)));
+
+println("size");
+('size = size('list));
+println('size);
+println(size('list));
+println("");
+
+println("element");
+('otherList = get('list, 1));
+println(get('otherList, 0));
+println(get(get('list, 1),0));
+println(get(list(int(56), list(int(1), int(2)), int(2), int(1)), 1));
+println("");
+
+print("adios");

@@ -7,18 +7,26 @@ fmod EXPRESSION is
     op _+_ : Expression Expression -> Expression [ctor assoc comm] .
     op _-_ : Expression Expression -> Expression [ctor] .
     op _*_ : Expression Expression -> Expression [ctor assoc comm] .
+    op size(_) : Type -> Expression [ctor] .
+    op get(_,_) : Expression Int -> Expression [ctor] .
     
     vars T T' : Type .
     vars I I' : Int .
+    vars F F' : Float .
     vars S S' : String .
     var M : Memory .
     var Q : Qid .
     vars E E' : Expression .
+    var L : ListType .
 
     op eval : Memory Expression -> Type .
     eq eval (M, (intType I) + (intType I')) = (intType I + I') .
     eq eval (M, (intType I) - (intType I')) = (intType I - I') .
     eq eval (M, (intType I) * (intType I')) = (intType I * I') .
+
+    eq eval (M, (floatType F) + (floatType F')) = (floatType F + F') .
+    eq eval (M, (floatType F) - (floatType F')) = (floatType F - F') .
+    eq eval (M, (floatType F) * (floatType F')) = (floatType F * F') .
 
     eq eval (M, (stringType S) + (stringType S')) = (stringType S + S') .
 
@@ -28,5 +36,20 @@ fmod EXPRESSION is
     eq eval (M, E + E') = eval(M, eval(M, E) + eval(M, E')) .
     eq eval (M, E - E') = eval(M, eval(M, E) - eval(M, E')) .
     eq eval (M, E * E') = eval(M, eval(M, E) * eval(M, E')) .
+
+    eq eval (M, size(listType L)) = (intType sizeList(L)) .
+    eq eval (M, size(Q)) = (intType sizeAux(find(M, Q))) .
+
+    eq eval (M, get(listType L, I)) = elementList(L, I, 0) .
+    eq eval (M, get(Q, I)) = elementListAux(find(M, Q), I) .
+    eq eval (M, get(E, I)) = eval(M, get(eval(M,E), I)) .
+
+    op elementListAux : Type Int -> ListType .
+    eq elementListAux((listType L), I) = elementList(L, I, 0) .
+    eq elementListAux(T, I) = (intType 0) [owise] .
+
+    op sizeAux : Type -> Int .
+    eq sizeAux((listType L)) = sizeList(L) .
+    eq sizeAux(T) = 0 [owise] .
 
 endfm

@@ -1,5 +1,5 @@
 mod IO is
-    pr TYPE .
+    pr EXPRESSION .
     pr MEMORY .
     pr CONVERSION .
     including STD-STREAM . 
@@ -9,6 +9,9 @@ mod IO is
     var O : Oid .
     var M : Memory .
     var Q : Qid .
+    var F : Float .
+    var E : Expression .
+    var L : ListType .
 
     op print : String Oid -> Msg .
     eq print(S, O) = write(stdout, O, S) .
@@ -16,19 +19,23 @@ mod IO is
     op println : String Oid -> Msg .
     eq println(S, O) = print(S + "\n", O) .
 
-    op print : Memory Type Oid -> Msg .
+    op print : Memory Expression Oid -> Msg .
     eq print(M, (stringType S), O) = write(stdout, O, S) .
     eq print(M, (intType I), O) = write(stdout, O, string(I, 10)) .
+    eq print(M, (floatType F), O) = write(stdout, O, string(F)) .
     eq print(M, (boolType false), O) = print("false", O) .
     eq print(M, (boolType true), O) = print("true", O) .
-    eq print(M, Q, O) = print(M, find(M, Q), O) [owise] .
+    eq print(M, (listType L), O) = print("list", O) .
+    eq print(M, E, O) = print(M, eval(M, E), O) [owise] .
 
-    op println : Memory Type Oid -> Msg .
-    eq println(M, (stringType S), O) =  print(S + "\n", O) .
-    eq println(M, (intType I), O) =  print(string(I, 10) + "\n", O) .
+    op println : Memory Expression Oid -> Msg .
+    eq println(M, (stringType S), O) =  println(S, O) .
+    eq println(M, (intType I), O) =  println(string(I, 10), O) .
+    eq println(M, (floatType F), O) =  println(string(F), O) .
     eq println(M, (boolType false), O) = println("false", O) .
     eq println(M, (boolType true), O) = println("true", O) .
-    eq println(M, Q, O) = println(M, find(M, Q), O) [owise] .
+    eq println(M, (listType L), O) = println("list", O) .
+    eq println(M, E, O) = println(M, eval(M, E), O) [owise] .
 
     op startWrite : String Oid -> Msg .
     eq startWrite(S, O) = getLine (stdin, O, S) .

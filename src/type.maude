@@ -2,18 +2,25 @@ fmod TYPE is
     pr INT .
     pr STRING .
     pr QID .
+    pr FLOAT .
+    pr LISTTYPE .
 
     sorts Types Type .
+    subsort Type < ListType .
     subsort Qid < Type .
 
     var I : Int .
     var S : String .
     var B : Bool .
+    var F : Float .
+    var L : ListType .
 
-    ops intType stringType boolType : -> Types [ctor] .
+    ops intType stringType boolType floatType listType : -> Types [ctor] .
     op (__) : Types Int -> Type [ctor] .
     op (__) : Types String -> Type [ctor] .
     op (__) : Types Bool -> Type [ctor] .
+    op (__) : Types Float -> Type [ctor] .
+    op (__) : Types ListType -> Type [ctor] .
 
     op int : Int -> Type .
     eq int(I) = (intType I) .
@@ -23,4 +30,11 @@ fmod TYPE is
 
     op bool : Bool -> Type .
     eq bool(B) = (boolType B) .
+
+    op float : Float -> Type .
+    eq float(F) = (floatType F) .
+
+    op list : ListType -> Type .
+    eq list(L) = (listType L) .
+
 endfm

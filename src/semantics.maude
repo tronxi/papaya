@@ -16,7 +16,6 @@ mod SEMANTICS is
     var E : Expression .
     var P P' : Program .
     var S : String .
-    var T : Type .
 
     rl [comment] :
         {M | // P' P}
@@ -39,12 +38,12 @@ mod SEMANTICS is
         < system : System | { M | P} > println(S, system) .
     
     rl [printType] :
-        < system : System | {M | print(T); P} >
+        < system : System | {M | print(E); P} >
         =>
-        < system : System | { M | P} > print(M, T, system) .
+        < system : System | { M | P} > print(M, E, system) .
 
     rl [printlnType] :
-        < system : System | {M | println(T); P} >
+        < system : System | {M | println(E); P} >
         =>
-        < system : System | { M | P} > println(M, T, system) .
+        < system : System | { M | P} > println(M, E, system) .
 endm

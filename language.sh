@@ -1,1 +1,0 @@
-python3 execute.py $1

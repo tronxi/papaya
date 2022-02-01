@@ -1,0 +1,18 @@
+fmod LISTTYPE is 
+    pr INT .
+    sort ListType .
+    op empty : -> ListType [ctor] .
+    op _,_ : ListType ListType -> ListType [ctor assoc id: empty] .
+
+    vars L L' : ListType .
+    vars I I' : Int .
+
+    op sizeList : ListType -> Int .
+    eq sizeList(empty) = 0 .
+    eq sizeList(L, L') = s(sizeList(L')) .
+
+    op elementList : ListType Int Int -> ListType .
+    eq elementList(empty, I , I') = empty .
+    eq elementList(L, L', I , I) = L .
+    eq elementList(L, L', I, I') = elementList(L', I, s(I')) .
+endfm

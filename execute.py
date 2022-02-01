@@ -1,16 +1,19 @@
 import maude
 import sys
 
-def main(filename):
+def main(filename, debug=False):
     programFile = open(filename, "r").read()
-    initialProgram = "print(\"\"); print(\"\"); print(\"\"); ${program}"
-    generatedProgramFile = programFile.replace("${program}", initialProgram)
-    system = " < system : System | { none | ${program} } >"
-    generatedSystem = system.replace("${program}", generatedProgramFile)
-    # print(generatedSystem)
+    system = " < system : System | { none | print(\"\\0\"); ${program} println(\"\\0\"); } >"
+    generatedSystem = system.replace("${program}", programFile)
     maude.init()
     maude.load("src/loads.maude")
-    maude.getModule('SEMANTICS').parseTerm(generatedSystem).erewrite()
+    result = maude.getModule('SEMANTICS').parseTerm(generatedSystem).erewrite()
+    if debug:
+        print("\n\nResult:")
+        print(result)
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    debug = False
+    if len(sys.argv) > 2 and sys.argv[2] == "--debug":
+        debug = True
+    main(sys.argv[1], debug)
