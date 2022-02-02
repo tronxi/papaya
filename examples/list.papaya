@@ -1,32 +1,32 @@
-println("hola");
-println("");
+function 'main() {
+    println("hola");
+    println("");
 
-// ('list = list(int(56), list(int(1), int(2)), int(2), int(1)));
+    ('list = list(int(56), list(int(1), int(2)), int(2), int(1)));
 
-// println("size");
-// ('size = size('list));
-// println('size);
-// println(size('list));
-// println("");
+    println("size");
+    ('size = size('list));
+    println('size);
+    println(size('list));
+    println("");
 
-// println("element");
-// ('otherList = get('list, 1));
-// println(get('otherList, 0));
-// println(get(get('list, 1),0));
-// println(get(list(int(56), list(int(1), int(2)), int(2), int(1)), 1));
-// println("");
+    println("element");
+    ('otherList = get('list, 1));
+    println(get('otherList, 0));
+    println(get(get('list, 1),0));
+    println(get(list(int(56), list(int(1), int(2)), int(2), int(1)), 1));
+    println("");
 
-// println("remove");
-// ('removelist = list(int(1), int(2), list(int(3), int(4))));
-// ('removelist = remove(get('removelist,2), 1));
-// println(size('removelist));
-// println("");
+    println("remove");
+    ('removelist = list(int(1), int(2), list(int(3), int(4))));
+    ('removelist = remove(get('removelist,2), 1));
+    println(size('removelist));
+    println("");
 
 
-println("add");
-('addlist = list(int(1), int(2), list(string("hola"), string("mundo")), int(4)));
-('addlist = modify('addlist, 2, modify(get('addlist, 2),1,string("inglaterra"))));
-println('addlist);
-println("");
-
-print("adios");
+    println("add");
+    ('addlist = list(int(1), int(2), list(string("hola"), string("mundo")), int(4)));
+    ('addlist = modify('addlist, 2, modify(get('addlist, 2),1,string("inglaterra"))));
+    println('addlist);
+    println("");
+}

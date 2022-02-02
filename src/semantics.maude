@@ -1,49 +1,91 @@
 mod SEMANTICS is
     pr SYNTAX .
     pr IO .
-    including STD-STREAM . 
 
     sort System .
     subsort System < Attribute .
 
-    op {_|_} : Memory Program -> System [ctor] .
+    op {_|_} : Memory Function -> System [ctor] .
 
     op System : -> Cid . 
     op system : -> Oid . 
 
     var M : Memory .
-    var Q : Qid .
+    vars Q Q' : Qid .
     var E : Expression .
     var P P' : Program .
     var S : String .
+    vars F F' : Function .
+    var R : Return .
+
+    rl [printFinal] :
+        { M | F function 'main() { end } }
+        =>
+        { M | F function 'main() { println(""); finalPrint } } .
 
     rl [comment] :
-        {M | // P' P}
+        {M | F function 'main() { // P' P } }
         =>
-        {M | P} . 
+        {M | F function 'main() { P } } . 
 
     rl [assignment] :
-        {M | (Q = E);  P}
+        {M | F function 'main() { (Q = E); P} }
         =>
-        {save(M, Q, eval(M, E)) | P} .
+        {save(M, Q, eval(M, E)) | F function 'main() { P } } .
     
     rl [printString] :
-        < system : System | {M | print(S); P} >
+        < system : System | {M | F function 'main() { print(S); P } } >
         =>
-        < system : System | { M | P} > print(S, system) .
+        < system : System | { M | F function 'main() { P }} > print(S, system) .
 
     rl [printlnString] :
-        < system : System | {M | println(S); P} >
+        < system : System | {M | F function 'main() { println(S); P } } >
         =>
-        < system : System | { M | P} > println(S, system) .
+        < system : System | { M | F function 'main() { P } } > println(S, system) .
     
     rl [printType] :
-        < system : System | {M | print(E); P} >
+        < system : System | {M | F function 'main() { print(E); P } } >
         =>
-        < system : System | { M | P} > print(M, E, system) .
+        < system : System | { M | F function 'main() { P } } > print(M, E, system) .
 
     rl [printlnType] :
-        < system : System | {M | println(E); P} >
+        < system : System | {M | F function 'main() { println(E); P } } >
         =>
-        < system : System | { M | P} > println(M, E, system) .
+        < system : System | { M | F function 'main() { P } } > println(M, E, system) .
+    
+    rl [callVoidFunction] :
+        { M | F function 'main() {Q(); P } function Q () {P'} }
+        =>
+        { M | F function 'main() {P' P } function Q () {P'} } .
+
+    rl [assignVoidFunction] :
+        { M | F function 'main() {(Q' = Q()); P } function Q () {P'} }
+        =>
+        { M | F function 'main() {P' P } function Q () {P'} } .
+
+    rl [callReturnFunction] :
+        { M | F function 'main() {Q(); P } function Q () {P' # R } }
+        =>
+        { M | F function 'main() {P' P } function Q () {P' # R} } .
+
+    rl [callOnlyReturnFunction] :
+        { M | F function 'main() {Q(); P } function Q () { # R } }
+        =>
+        { M | F function 'main() { P } function Q () { # R} } .
+
+    rl [callAssignReturnFunction] :
+        { M | F function 'main() {(Q' = Q()); P } function Q () {P' # return E ;} }
+        =>
+        { M | F function 'main() {P' return Q' -> E ; P } function Q () {P' # return E ;} } .
+
+    rl [callAssignOnlyReturnFunction] :
+        { M | F function 'main() {(Q' = Q()); P } function Q () { # return E ;} }
+        =>
+        { M | F function 'main() { return Q' -> E ; P } function Q () { # return E ;} } .
+    
+    rl [assignReturn] :
+        { M | F function 'main() { return Q -> E ; P } } 
+        =>
+        { save(M, Q, eval(M, E)) | F function 'main() { P } } .
+
 endm

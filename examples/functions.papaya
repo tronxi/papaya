@@ -1,0 +1,11 @@
+function 'main() {
+    'h();
+    ('var = 'h());
+    println('var);
+    print("adios");
+}
+
+function 'h() {
+    println("funcion");
+    # return int(4) + int(2);
+}

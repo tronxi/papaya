@@ -3,17 +3,21 @@ import sys
 
 def main(filename, debug=False):
     programFile = open(filename, "r").read()
-    system = " < system : System | { none | print(\"\\0\"); ${program} println(\"\\0\"); } >"
-    generatedSystem = system.replace("${program}", programFile)
+    initialProgram = "function 'main() { print(\"\"); print(\"\"); print(\"\"); "
+    generatedProgramFile = programFile.replace("function 'main() {", initialProgram)
+
+    system = " < system : System | { none | ${program} } > "
+    generatedSystem = system.replace("${program}", generatedProgramFile)
+
     maude.init()
     maude.load("src/loads.maude")
-    result = maude.getModule('SEMANTICS').parseTerm(generatedSystem).erewrite()
+    result,rewrites = maude.getModule('SEMANTICS').parseTerm(generatedSystem).erewrite()
     if debug:
         print("\nResult:")
         print(result)
 
 if __name__ == "__main__":
     debug = False
-    if len(sys.argv) > 2 and sys.argv[2] == "--debug":
+    if len(sys.argv) > 2 and sys.argv[2] == "-d":
         debug = True
     main(sys.argv[1], debug)

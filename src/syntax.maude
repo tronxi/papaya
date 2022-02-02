@@ -1,14 +1,7 @@
 fmod SYNTAX is
-    pr ASSIGNMENT .
+    pr FUNCTION .
 
-    sort Program .
-    op end : -> Program [ctor] .
-    op //_ : Program -> Program [ctor] .
-    op print(_); : String -> Program [ctor] .
-    op print(_); : Expression -> Program [ctor] .
-    op println(_); : String -> Program [ctor] .
-    op println(_); : Expression -> Program [ctor] .
-    op (_); : Assignment -> Program [ctor] .
-    op __ : Program Program -> Program [ctor assoc id: end] .
+    op end : -> Function [ctor] .
+    op __ : Function Function -> Function [ctor assoc comm id: end] .
 
 endfm

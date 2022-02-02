@@ -1,9 +1,11 @@
-load list .
-load type .
-load memory .
-load expression .
-load assignment .
-load syntax .
-load file .
-load io .
-load semantics .
+load list
+load type
+load memory
+load expression
+load assignment
+load program
+load function
+load syntax
+load file
+load io
+load semantics

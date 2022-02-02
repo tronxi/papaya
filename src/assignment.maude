@@ -3,6 +3,8 @@ fmod ASSIGNMENT is
     sort Assignment .
 
     op _=_ : Qid Expression -> Assignment [ctor] .
+    op _=_() : Qid Qid -> Assignment [ctor] .
+
 
     var M : Memory .
     var Q : Qid .
