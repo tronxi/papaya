@@ -17,11 +17,13 @@ mod SEMANTICS is
     var S : String .
     vars F F' : Function .
     var R : Return .
+    var AL : ArgumentList .
+    var CAL : CallArgumentList .
 
     rl [printFinal] :
         { M | F function 'main() { end } }
         =>
-        { M | F function 'main() { println(""); finalPrint } } .
+        { M | F function 'main() { print(""); finalPrint } } .
 
     rl [comment] :
         {M | F function 'main() { // P' P } }
@@ -53,35 +55,42 @@ mod SEMANTICS is
         =>
         < system : System | { M | F function 'main() { P } } > println(M, E, system) .
     
-    rl [callVoidFunction] :
-        { M | F function 'main() {Q(); P } function Q () {P'} }
+    crl [callVoidFunction] :
+        { M | F function 'main() {{Q CAL}; P } function Q AL {P'} }
         =>
-        { M | F function 'main() {P' P } function Q () {P'} } .
+        { evalueArgument(M, AL, CAL) | F function 'main() {P' P } function Q AL {P'} } 
+        if sameNumArguments(CAL, AL) .
 
-    rl [assignVoidFunction] :
-        { M | F function 'main() {(Q' = Q()); P } function Q () {P'} }
+    crl [assignVoidFunction] :
+        { M | F function 'main() {(Q' = {Q CAL}); P } function Q AL {P'} }
         =>
-        { M | F function 'main() {P' P } function Q () {P'} } .
+        { evalueArgument(M, AL, CAL)  | F function 'main() {P' P } function Q AL {P'} }
+        if sameNumArguments(CAL, AL) .
 
-    rl [callReturnFunction] :
-        { M | F function 'main() {Q(); P } function Q () {P' # R } }
-        =>
-        { M | F function 'main() {P' P } function Q () {P' # R} } .
 
-    rl [callOnlyReturnFunction] :
-        { M | F function 'main() {Q(); P } function Q () { # R } }
+    crl [callReturnFunction] :
+        { M | F function 'main() {{Q CAL}; P } function Q AL {P' # R } }
         =>
-        { M | F function 'main() { P } function Q () { # R} } .
+        { evalueArgument(M, AL, CAL)  | F function 'main() {P' P } function Q AL {P' # R} }
+        if sameNumArguments(CAL, AL) .
 
-    rl [callAssignReturnFunction] :
-        { M | F function 'main() {(Q' = Q()); P } function Q () {P' # return E ;} }
+    crl [callOnlyReturnFunction] :
+        { M | F function 'main() {{Q CAL}; P } function Q AL { # R } }
         =>
-        { M | F function 'main() {P' return Q' -> E ; P } function Q () {P' # return E ;} } .
+        { evalueArgument(M, AL, CAL)  | F function 'main() { P } function Q AL { # R} }
+        if sameNumArguments(CAL, AL) .
 
-    rl [callAssignOnlyReturnFunction] :
-        { M | F function 'main() {(Q' = Q()); P } function Q () { # return E ;} }
+    crl [callAssignReturnFunction] :
+        { M | F function 'main() {(Q' = {Q CAL} ); P } function Q AL {P' # return E ;} }
         =>
-        { M | F function 'main() { return Q' -> E ; P } function Q () { # return E ;} } .
+        { evalueArgument(M, AL, CAL)  | F function 'main() {P' return Q' -> E ; P } function Q AL {P' # return E ;} }
+        if sameNumArguments(CAL, AL) .
+
+    crl [callAssignOnlyReturnFunction] :
+        { M | F function 'main() {(Q' = {Q CAL}); P } function Q AL { # return E ;} }
+        =>
+        { evalueArgument(M, AL, CAL)  | F function 'main() { return Q' -> E ; P } function Q AL { # return E ;} }
+        if sameNumArguments(CAL, AL) .
     
     rl [assignReturn] :
         { M | F function 'main() { return Q -> E ; P } } 

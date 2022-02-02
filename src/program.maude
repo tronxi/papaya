@@ -10,7 +10,7 @@ fmod PROGRAM is
     op println(_); : String -> Program [ctor] .
     op println(_); : Expression -> Program [ctor] .
     op (_); : Assignment -> Program [ctor] .
-    op _(); : Qid -> Program [ctor] .
+    op {__}; : Qid CallArgumentList -> Program [ctor] .
     op return_->_; : Qid Expression -> Program [ctor] .
     op __ : Program Program -> Program [ctor assoc id: end] .
 endfm

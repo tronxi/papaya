@@ -1,9 +1,10 @@
 fmod ASSIGNMENT is
     pr EXPRESSION .
+    pr CALLCARGUMENTLIST .
     sort Assignment .
 
     op _=_ : Qid Expression -> Assignment [ctor] .
-    op _=_() : Qid Qid -> Assignment [ctor] .
+    op _={__} : Qid Qid CallArgumentList -> Assignment [ctor] .
 
 
     var M : Memory .

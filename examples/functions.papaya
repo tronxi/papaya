@@ -1,11 +1,14 @@
 function 'main() {
-    'h();
-    ('var = 'h());
-    println('var);
-    print("adios");
+    ('result = {'suma[int(4),, int(5)]});
+    println('result);
 }
 
-function 'h() {
-    println("funcion");
-    # return int(4) + int(2);
+function 'suma('arg1 'arg2) {
+    println('arg1);
+    println('arg2);
+    # return ('arg1 + 'arg2);
+}
+
+function 'otra() {
+    println("otra");
 }

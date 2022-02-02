@@ -1,0 +1,50 @@
+fmod CALLCARGUMENTLIST is 
+    pr EXPRESSION .
+    sorts CallArgumentList ArgumentList QidList ExpressionList .
+    subsort Expression < ExpressionList .
+    subsort Qid < QidList .
+
+    op emptyQidList : -> QidList [ctor] .
+    op __ : QidList QidList -> QidList [ctor assoc id: emptyQidList] .
+    op () : -> ArgumentList [ctor] .
+    op ((_)) : QidList -> ArgumentList [ctor] .
+
+    op emptyExpressionList : -> ExpressionList [ctor] .
+    op _,,_ : ExpressionList ExpressionList -> ExpressionList [ctor assoc id: emptyExpressionList] .
+    op [] : -> CallArgumentList [ctor] .
+    op [_] : ExpressionList -> CallArgumentList [ctor] .
+
+    var M : Memory .
+    var CAL : CallArgumentList .
+    var AL : ArgumentList .
+    var E : Expression .
+    vars EL : ExpressionList .
+    vars Q Q' : Qid .
+    var QL : QidList .
+    var I : Int .
+
+    op numCallArgument : CallArgumentList -> Int .
+    eq numCallArgument([]) = 0 .
+    eq numCallArgument([EL]) = numExpressionList(EL) .
+
+    op numExpressionList : ExpressionList -> Int .
+    eq numExpressionList(emptyExpressionList) = 0 .
+    eq numExpressionList(E ,, EL) = s(numExpressionList(EL)) .
+
+    op numArgumentList : ArgumentList -> Int .
+    eq numArgumentList(()) = 0 .
+    eq numArgumentList((QL)) = numQidList(QL) .
+
+    op numQidList : QidList -> Int .
+    eq numQidList(emptyQidList) = 0 .
+    eq numQidList(Q QL ) = s(numQidList(QL)) .
+
+    op sameNumArguments : CallArgumentList ArgumentList -> Bool .
+    eq sameNumArguments(CAL, AL) = numCallArgument(CAL) == numArgumentList(AL) .
+
+    op evalueArgument : Memory ArgumentList CallArgumentList -> Memory .
+    ceq evalueArgument(M, AL, CAL) = save(M, 'cerito, int(0))
+        if numArgumentList(AL) == 0 or numCallArgument(CAL) == 0 .
+    eq evalueArgument(M, (Q QL), [E ,, EL]) = evalueArgument(save(M, Q, eval(M,E)), (QL), [EL]) .
+
+endfm

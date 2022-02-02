@@ -3,7 +3,7 @@ fmod FUNCTION is
     sorts Function Return .
 
     op return_; : Expression -> Return [ctor] .
-    op function_(){_} : Qid Program -> Function [ctor] .
-    op function_(){_#_} : Qid Program Return -> Function [ctor] .
-    op function_(){#_} : Qid Return -> Function [ctor] .
+    op function__{_} : Qid ArgumentList Program -> Function [ctor] .
+    op function__{_#_} : Qid ArgumentList Program Return -> Function [ctor] .
+    op function__{#_} : Qid ArgumentList Return -> Function [ctor] .
 endfm
