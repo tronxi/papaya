@@ -1,13 +1,15 @@
-println("hola");
-('f = float(5.41));
-('fe = float(3.32));
-('b = int(10));
-('result = 'f + 'fe);
-('a = ('b + int(2) * int(10)) - int(1));
-('bool = bool(false));
-println('bool);
-println(string("variable string"));
-println(int(100));
-println('f);
-print("adios");
-print("adios");
+function 'main () {
+    println("hola");
+    ('f = float(5.41));
+    ('fe = float(3.32));
+    ('b = int(10));
+    ('result = 'f + 'fe);
+    ('a = ('b + int(2) * int(10)) - int(1));
+    ('bool = bool(false));
+    println('bool);
+    println(string("variable string"));
+    println(int(100));
+    println('f);
+    print("adios");
+    print("adios");
+}
