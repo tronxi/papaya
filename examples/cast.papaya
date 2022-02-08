@@ -1,0 +1,69 @@
+function 'main() {
+    println("cast");
+
+    // ('fromString = toString(string("9")));
+    // println('fromString);
+
+    // ('fromInt = toString(int(9)));
+    // println('fromInt);
+
+    // ('fromFloat = toString(float(9.9)));
+    // println('fromFloat);
+
+    // ('fromBool = toString(bool(false)));
+    // println('fromBool); 
+
+    // ('fromExpression = toString(int(4) + int(5)));
+    // println('fromExpression);
+
+
+
+    // ('fromString = toInt(string("9")));
+    // println('fromString);
+
+    // ('fromInt = toInt(int(9)));
+    // println('fromInt);
+
+    // // ('fromFloat = toInt(float(9.9)));
+    // // println('fromFloat);
+
+    // ('fromBool = toInt(bool(true)));
+    // println('fromBool); 
+
+    // // ('fromExpression = toString(int(4) + int(5)));
+    // // println('fromExpression);
+
+    
+    
+    // ('fromString = toBool(string("")));
+    // println('fromString);
+
+    // ('fromInt = toBool(int(0)));
+    // println('fromInt);
+
+    // ('fromFloat = toBool(float(0.1)));
+    // println('fromFloat);
+
+    // ('fromBool = toBool(bool(false)));
+    // println('fromBool); 
+
+    // ('fromExpression = toBool((int(0) + int(0))));
+    // println('fromExpression);
+
+
+    ('fromString = toFloat(string("9.87")));
+    println('fromString);
+
+    ('fromInt = toFloat(int(8)));
+    println('fromInt);
+
+    ('fromFloat = toFloat(float(0.1)));
+    println('fromFloat);
+
+    ('fromBool = toFloat(bool(false)));
+    println('fromBool); 
+
+    ('fromExpression = toFloat((int(0) + int(8))));
+    println('fromExpression);
+
+}

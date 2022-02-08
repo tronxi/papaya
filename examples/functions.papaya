@@ -1,6 +1,10 @@
 function 'main() {
-    ('result = {'suma[int(4),, int(5)]});
+    ('var1 = int(4));
+    ('var2 = int(5));
+    ('result = {'suma['var1,, 'var2]});
     println('result);
+    ('list = list('var1, 'var2, 'result, 'arg1, 'arg2));
+    {'otra['list]};
 }
 
 function 'suma('arg1 'arg2) {
@@ -9,6 +13,7 @@ function 'suma('arg1 'arg2) {
     # return ('arg1 + 'arg2);
 }
 
-function 'otra() {
+function 'otra('argList) {
+    println('argList);
     println("otra");
 }

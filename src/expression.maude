@@ -1,5 +1,6 @@
 fmod EXPRESSION is
     pr MEMORY .
+    pr CONVERSION .
 
     sort Expression .
     subsort Type < Expression .
@@ -12,11 +13,16 @@ fmod EXPRESSION is
     op remove(_,_) : Expression Int -> Expression [ctor] .
     op add(_,_) : Expression Type -> Expression [ctor] .
     op modify(_,_,_) : Expression Int Expression -> Expression [ctor] .
-    
+    op toInt(_) : Expression -> Expression [ctor] .
+    op toString(_) : Expression -> Expression [ctor] .
+    op toBool(_) : Expression -> Expression [ctor] .
+    op toFloat(_) : Expression -> Expression [ctor] .
+        
     vars T T' : Type .
     vars I I' : Int .
     vars F F' : Float .
     vars S S' : String .
+    var B : Bool .
     var M : Memory .
     var Q : Qid .
     vars E E' : Expression .
@@ -57,6 +63,45 @@ fmod EXPRESSION is
 
     eq eval (M, add(listType L , T)) = (listType L, T) .
     eq eval (M, add(Q, T)) = (listType addAux(find(M, Q), T)) .
+
+
+    eq eval (M, toString((stringType S))) = string(S) .
+    eq eval (M, toString((intType I))) = string(string(I, 10)) .
+    eq eval (M, toString((floatType F))) = string(string(F)) .
+    eq eval (M, toString((boolType true))) = string("true") .
+    eq eval (M, toString((boolType false))) = string("false") .
+    eq eval (M, toString(E)) = eval(M, toString(eval(M, E))) .
+
+
+    eq eval (M, toInt((intType I))) = int(I) .
+    eq eval (M, toInt((stringType S))) = int(rat(S, 10)) .
+    eq eval (M, toInt((boolType true))) = int(1) .
+    eq eval (M, toInt((boolType false))) = int(0) .
+    --- eq eval (M, toInt((floatType F))) = int(rat(F)) . TODO
+    eq eval (M, toInt(E)) = eval(M, toInt(eval(M, E))) .
+
+    eq eval (M, toFloat((intType I))) = float(float(I)) .
+    eq eval (M, toFloat((stringType S))) = float(float(S)) .
+    eq eval (M, toFloat((boolType true))) = float(1.0) .
+    eq eval (M, toFloat((boolType false))) = float(0.0) .
+    eq eval (M, toFloat((floatType F))) = float(F) .
+    eq eval (M, toFloat(E)) = eval(M, toFloat(eval(M, E))) .
+
+
+    ceq eval (M, toBool((intType I))) = bool(false) 
+        if I == 0 .
+    ceq eval (M, toBool((intType I))) = bool(true) 
+        if I > 0 .
+    ceq eval (M, toBool((floatType F))) = bool(false) 
+        if F == 0.0 .
+    ceq eval (M, toBool((floatType F))) = bool(true) 
+        if F > 0.0 . 
+    ceq eval (M, toBool((stringType S))) = bool(false)
+        if S == "" .
+    ceq eval (M, toBool((stringType S))) = bool(true)
+        if S =/= "" .
+    eq eval (M, toBool((boolType B))) = bool(B) .
+    eq eval (M, toBool(E)) = eval(M, toBool(eval(M, E))) .
 
     op removeElementAux : Type Int -> ListType .
     eq removeElementAux((listType L), I) = removeElementList(L, I, 0) .
