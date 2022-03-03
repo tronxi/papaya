@@ -77,7 +77,7 @@ fmod EXPRESSION is
     eq eval (M, toInt((stringType S))) = int(rat(S, 10)) .
     eq eval (M, toInt((boolType true))) = int(1) .
     eq eval (M, toInt((boolType false))) = int(0) .
-    --- eq eval (M, toInt((floatType F))) = int(rat(F)) . TODO
+    eq eval (M, toInt((floatType F))) = int(floatToInt(F)) .
     eq eval (M, toInt(E)) = eval(M, toInt(eval(M, E))) .
 
     eq eval (M, toFloat((intType I))) = float(float(I)) .
@@ -122,5 +122,13 @@ fmod EXPRESSION is
     op modifyAux : Memory Type Type Int -> ListType .
     eq modifyAux(M, (listType L), T, I) = modifyElementList(L, T, I, 0) .
     eq modifyAux(M, T, T', I) = (intType 0) [owise] .
+
+    op floatToInt : Float -> Int .
+    ceq floatToInt(F) = rat(substr(string(F), 0, find(string(F), ".", 0)), 10) 
+        if find(string(F), "+", 0) == notFound .
+    eq floatToInt(F) = rat(substr(string(F), 0, 2), 10)  [owise] .
+
+    op lastNumber : Float -> Int .
+    eq lastNumber(F) = 1 .
 
 endfm
